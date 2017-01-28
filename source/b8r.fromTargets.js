@@ -17,7 +17,7 @@ The **checked** of an `<input type="checkbox">` or `<input type="radio">` elemen
 
 ### text
 
-The **textContent** of a typical element (including div, span, and so forth). Note 
+The **textContent** of a typical element (including div, span, and so forth). Note
 that these elements will only get change events if you send them.
 */
 /* global module */
@@ -26,21 +26,20 @@ that these elements will only get change events if you send them.
 module.exports = function(b8r) {
 
 return {
-	value: function(element){
-		return element.value;
-	},
-	checked: function(element) {
-		return element.checked;
-	},
-	text: function(element){
-		return element.textContent;
-	},
-	fromMethod: function(element, path) {
-		var [model, ...method] = path.split('.');
+
+	value: el => el.value,
+
+	checked: el => el.checked,
+
+	text: el => el.textContent,
+
+	fromMethod: (element, path) => {
+		let [model, ...method] = path.split('.');
 		method = method.join('.');
 		return b8r.getByPath(model, method)(element);
 	},
-	component: function(element, path) {
+
+	component: (element, path) => {
 		const component = element.closest('[data-component-id]');
 		const id = component.getAttribute('data-component-id');
 		return b8r.getByPath(id, path);
